@@ -16,14 +16,14 @@ module.exports.addUser = async (req, res) => {
         res.json("User existed")
     }
         
-    await User.create(req.body)
-    res.json("Success")
+    const newUser = await User.create(req.body)
+    res.json(newUser)
 
 }
 
 module.exports.facebook = async (req, res) => {
 
-    const user = await User.findOne({ userID: req.body.userID, accessToken: re.body.accessToken })
+    const user = await User.findOne({ userID: req.body.userID, accessToken: req.body.accessToken })
 
     if (user){
         res.json("Account exist")
