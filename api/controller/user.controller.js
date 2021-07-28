@@ -14,10 +14,10 @@ module.exports.addUser = async (req, res) => {
 
     if (user){
         res.json("User existed")
+    }else{
+        const newUser = await User.create(req.body)
+        res.json(newUser)
     }
-        
-    const newUser = await User.create(req.body)
-    res.json(newUser)
 
 }
 
@@ -27,8 +27,8 @@ module.exports.facebook = async (req, res) => {
 
     if (user){
         res.json("Account exist")
+    }else{
+        res.json("Account no exist")
     }
-
-    res.json("Account no exist")
 
 }
