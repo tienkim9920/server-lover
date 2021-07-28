@@ -1,0 +1,28 @@
+{
+  "name": "server-lover",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tienkim9920/server-lover.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tienkim9920/server-lover/issues"
+  },
+  "homepage": "https://github.com/tienkim9920/server-lover#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "mongoose": "^5.13.3",
+    "socket.io": "^4.1.3"
+  }
+}
