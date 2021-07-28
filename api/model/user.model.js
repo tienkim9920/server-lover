@@ -10,7 +10,6 @@ const userSchema = new Schema({
     phone: String,
     password: String,
     userID: String,
-    accessToken: String,
     image: Array,
 });
 
