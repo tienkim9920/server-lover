@@ -26,9 +26,14 @@ module.exports.facebook = async (req, res) => {
     const user = await User.findOne({ userID: req.body.userID })
 
     if (user){
-        res.json("Account exist")
+        res.json({
+            msg: "Account exist",
+            userID: user._id
+        })
     }else{
-        res.json("Account no exist")
+        res.json({
+            msg: "Account no exist"
+        })
     }
 
 }
