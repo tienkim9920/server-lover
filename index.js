@@ -23,8 +23,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const userAPI = require('./api/router/user.router')
+const matchesAPI = require('./api/router/matches.router')
 
 app.use('/user', userAPI)
+app.use('/matches', matchesAPI)
 
 app.listen(PORT, () => {
     console.log(`listening at http://localhost:${PORT}`);
