@@ -113,6 +113,18 @@ module.exports.updateGender = async (req, res) => {
 
 }
 
+module.exports.updateAge = async (req, res) => {
+
+    const user = await User.findOne({ _id: req.body._id })
+
+    user.age = req.body.age
+
+    user.save()
+
+    res.json("Update Age Success")
+
+}
+
 module.exports.updateMedia = async (req, res) => {
 
     const user = await User.findOne({ _id: req.body._id })
@@ -171,3 +183,4 @@ module.exports.deleteMedia = async (req, res) => {
     res.json(user)
 
 }
+

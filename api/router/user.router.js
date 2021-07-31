@@ -16,6 +16,8 @@ router.patch('/about', user.updateAbout)
 
 router.patch('/gender', user.updateGender)
 
+router.patch('/age', user.updateAge)
+
 router.patch('/media', user.updateMedia)
 
 router.patch('/delMedia', user.deleteMedia)
