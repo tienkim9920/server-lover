@@ -16,6 +16,10 @@ router.patch('/about', user.updateAbout)
 
 router.patch('/gender', user.updateGender)
 
+router.patch('/media', user.updateMedia)
+
+router.patch('/delMedia', user.deleteMedia)
+
 router.post('/login', user.loginUser)
 
 router.post('/', user.addUser)

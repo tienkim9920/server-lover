@@ -1,4 +1,5 @@
 const User = require('../model/user.model')
+const fs = require('fs')
 
 module.exports.listUser = async (req, res) => {
 
@@ -112,3 +113,61 @@ module.exports.updateGender = async (req, res) => {
 
 }
 
+module.exports.updateMedia = async (req, res) => {
+
+    const user = await User.findOne({ _id: req.body._id })
+
+    if (user.image.length < 9){
+        var fileImage = req.files.file;
+
+        var fileName = fileImage.name
+
+        // create path to client get image
+        var fileProduct = "http://localhost:4000/" + fileName
+
+        const image = {
+            id: Math.random().toString(),
+            url: fileProduct
+        }
+
+        user.image.push(image)
+
+        // move file name in folder public
+        fileImage.mv('./public/' + fileName)
+
+        user.save()
+
+        res.json({ msg: "Success" })
+    }else{
+        res.json({ msg: "Fail" })
+    }
+
+}
+
+module.exports.deleteMedia = async (req, res) => {
+
+    // get a user
+    const user = await User.findOne({ _id: req.body._id })
+
+    // get path of user
+    const path = user.image[req.body.position].url
+
+    // split path become string 
+    const newPath = path.replace('http://localhost:4000/', './public/')
+
+    // delete file path
+    fs.unlink(newPath, (err) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+
+    // delete position image user
+    user.image.splice(req.body.position, 1)
+
+    user.save()
+
+    res.json(user)
+
+}

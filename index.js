@@ -5,6 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 const cors = require("cors");
+var upload = require('express-fileupload');
 
 const mongoose = require("mongoose");
 
@@ -14,6 +15,9 @@ mongoose.connect("mongodb+srv://tienkim9920:U4tQMg6Wfy8DaL@cluster0.tessf.mongod
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
+
+app.use('/', express.static('public'))
+app.use(upload());
 
 var bodyParser = require("body-parser");
 
