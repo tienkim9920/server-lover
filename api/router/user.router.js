@@ -20,6 +20,10 @@ router.patch('/age', user.updateAge)
 
 router.patch('/media', user.updateMedia)
 
+router.patch('/email', user.updateEmail)
+
+router.patch('/password', user.updatePassword)
+
 router.patch('/delMedia', user.deleteMedia)
 
 router.post('/login', user.loginUser)

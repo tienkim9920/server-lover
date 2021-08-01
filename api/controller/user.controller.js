@@ -125,6 +125,30 @@ module.exports.updateAge = async (req, res) => {
 
 }
 
+module.exports.updateEmail = async (req, res) => {
+
+    const user = await User.findOne({ _id: req.body._id })
+
+    user.email = req.body.email
+
+    user.save()
+
+    res.json("Update Email Success")
+
+}
+
+module.exports.updatePassword = async (req, res) => {
+
+    const user = await User.findOne({ _id: req.body._id })
+
+    user.password = req.body.password
+
+    user.save()
+
+    res.json("Update Password Success")
+
+}
+
 module.exports.updateMedia = async (req, res) => {
 
     const user = await User.findOne({ _id: req.body._id })
@@ -135,7 +159,8 @@ module.exports.updateMedia = async (req, res) => {
         var fileName = fileImage.name
 
         // create path to client get image
-        var fileProduct = "https://server-lover.herokuapp.com/" + fileName
+        // var fileProduct = "https://server-lover.herokuapp.com/" + fileName
+        var fileProduct = "http://localhost:4000/" + fileName
 
         const image = {
             id: Math.random().toString(),
@@ -165,7 +190,8 @@ module.exports.deleteMedia = async (req, res) => {
     const path = user.image[req.body.position].url
 
     // split path become string 
-    const newPath = path.replace('https://server-lover.herokuapp.com/', './public/')
+    // const newPath = path.replace('https://server-lover.herokuapp.com/', './public/')
+    const newPath = path.replace('http://localhost:4000/', './public/')
 
     // delete file path
     fs.unlink(newPath, (err) => {
