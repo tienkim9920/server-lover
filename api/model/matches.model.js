@@ -7,7 +7,10 @@ const MatchSchema = new Schema({
         type: String,
         ref: 'User'
     },
-    id_user: String
+    id_user: {
+        type: String,
+        ref: 'User'
+    }
 });
 
 const Matches = mongoose.model('Matches', MatchSchema, 'Matches');

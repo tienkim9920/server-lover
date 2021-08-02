@@ -28,9 +28,11 @@ app.use(cors());
 
 const userAPI = require('./api/router/user.router')
 const matchesAPI = require('./api/router/matches.router')
+const chatAPI = require('./api/router/chat.router')
 
 app.use('/user', userAPI)
 app.use('/matches', matchesAPI)
+app.use('/chat', chatAPI)
 
 app.listen(PORT, () => {
     console.log(`listening at http://localhost:${PORT}`);

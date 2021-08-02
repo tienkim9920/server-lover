@@ -159,8 +159,8 @@ module.exports.updateMedia = async (req, res) => {
         var fileName = fileImage.name
 
         // create path to client get image
-        // var fileProduct = "https://server-lover.herokuapp.com/" + fileName
-        var fileProduct = "http://localhost:4000/" + fileName
+        var fileProduct = "https://server-lover.herokuapp.com/" + fileName
+        // var fileProduct = "http://localhost:4000/" + fileName
 
         const image = {
             id: Math.random().toString(),
@@ -190,8 +190,8 @@ module.exports.deleteMedia = async (req, res) => {
     const path = user.image[req.body.position].url
 
     // split path become string 
-    // const newPath = path.replace('https://server-lover.herokuapp.com/', './public/')
-    const newPath = path.replace('http://localhost:4000/', './public/')
+    const newPath = path.replace('https://server-lover.herokuapp.com/', './public/')
+    // const newPath = path.replace('http://localhost:4000/', './public/')
 
     // delete file path
     fs.unlink(newPath, (err) => {
