@@ -27,11 +27,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const userAPI = require('./api/router/user.router')
-// const matchesAPI = require('./api/router/matches.router')
+const matchesAPI = require('./api/router/matches.router')
 const chatAPI = require('./api/router/chat.router')
 
 app.use('/user', userAPI)
-// app.use('/matches', matchesAPI)
+app.use('/matches', matchesAPI)
 app.use('/chat', chatAPI)
 
 app.listen(PORT, () => {

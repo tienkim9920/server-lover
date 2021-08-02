@@ -1,19 +1,19 @@
-// var express = require('express')
+var express = require('express')
 
-// var router = express.Router()
+var router = express.Router()
 
-// const matches = require('../controller/matches.controller')
+const matches = require('../controller/matches.controller')
 
-// // Get all matches
-// router.get('/list', matches.getObject)
+// Get all matches
+router.get('/list', matches.getObject)
 
-// // Create these user to all can match with lover
-// router.post('/', matches.createObject)
+// Create these user to all can match with lover
+router.post('/', matches.createObject)
 
-// router.patch('/like', matches.updateLike)
+router.patch('/like', matches.updateLike)
 
-// router.patch('/unlike', matches.updateUnlike)
+router.patch('/unlike', matches.updateUnlike)
 
-// router.patch('/supper', matches.updateSupper)
+router.patch('/supper', matches.updateSupper)
 
-// module.exports = router
+module.exports = router
