@@ -62,46 +62,46 @@ module.exports.getObject = async (req, res) => {
 
 module.exports.updateLike = async (req, res) => {
 
-    // // Get object that user match
-    // const match = await Matches.findOne({ _id: req.body._id })
+    // Get object that user match
+    const match = await Matches.findOne({ _id: req.body._id })
 
-    // match.status = '1'
+    match.status = '1'
 
-    // match.save()
+    match.save()
 
-    // // Check conditional to push room chat for lover
-    // const checking = await Matches.findOne({ id_user: match.id_userTo, id_userTo: match.id_user })
+    // Check conditional to push room chat for lover
+    const checking = await Matches.findOne({ id_user: match.id_userTo, id_userTo: match.id_user })
 
-    // if (checking.status === '1' || checking.status === '2'){
+    if (checking.status === '1' || checking.status === '2'){
 
-    //     checkingMatch(match)
+        checkingMatch(match)
 
-    //     res.json("Create Room Chat Success")
-    // }else{
-    //     res.json("Success")
-    // }
+        res.json("Create Room Chat Success")
+    }else{
+        res.json("Success")
+    }
 
 }
 
 module.exports.updateSupper = async (req, res) => {
 
-    // const match = await Matches.findOne({ _id: req.body._id })
+    const match = await Matches.findOne({ _id: req.body._id })
 
-    // match.status = '2'
+    match.status = '2'
 
-    // match.save()
+    match.save()
 
-    // // Check conditional to push room chat for lover
-    // const checking = await Matches.findOne({ id_user: match.id_userTo, id_userTo: match.id_user })
+    // Check conditional to push room chat for lover
+    const checking = await Matches.findOne({ id_user: match.id_userTo, id_userTo: match.id_user })
 
-    // if (checking.status === '1' || checking.status === '2'){
+    if (checking.status === '1' || checking.status === '2'){
 
-    //     checkingMatch(match)
+        checkingMatch(match)
 
-    //     res.json("Create Room Chat Success")
-    // }else{
-    //     res.json("Success")
-    // }   
+        res.json("Create Room Chat Success")
+    }else{
+        res.json("Success")
+    }   
 
 }
 
@@ -119,25 +119,25 @@ module.exports.updateUnlike = async (req, res) => {
 
 
 
-// async function checkingMatch(array){
-//     const room = Math.random().toString()
+async function checkingMatch(array){
+    const room = Math.random().toString()
 
-//     const chat_user_me = {
-//         id_user: array.id_user,
-//         id_userTo: array.id_userTo,
-//         room
-//     }
+    const chat_user_me = {
+        id_user: array.id_user,
+        id_userTo: array.id_userTo,
+        room
+    }
 
-//     // Create room chat for me
-//     await Chat.create(chat_user_me)
+    // Create room chat for me
+    await Chat.create(chat_user_me)
 
-//     const chat_user_to = {
-//         id_user: array.id_userTo,
-//         id_userTo: array.id_user,
-//         room
-//     }
+    const chat_user_to = {
+        id_user: array.id_userTo,
+        id_userTo: array.id_user,
+        room
+    }
 
-//     // Create room chat for there
-//     await Chat.create(chat_user_to)
+    // Create room chat for there
+    await Chat.create(chat_user_to)
 
-// }
+}
