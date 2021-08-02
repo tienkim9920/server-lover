@@ -1,9 +1,9 @@
-// var express = require('express')
+var express = require('express')
 
-// var router = express.Router()
+var router = express.Router()
 
-// const chat = require('../controller/chat.controller')
+const chat = require('../controller/chat.controller')
 
-// router.get('/list', chat.getList)
+router.get('/list', chat.getList)
 
-// module.exports = router
+module.exports = router
