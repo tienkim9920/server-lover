@@ -16,6 +16,8 @@ mongoose.connect("mongodb+srv://tienkim9920:U4tQMg6Wfy8DaL@cluster0.tessf.mongod
     useUnifiedTopology: true,
 })
 
+app.use(cors());
+
 app.use('/', express.static('public'))
 app.use(upload());
 
@@ -23,8 +25,6 @@ var bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use(cors());
 
 const userAPI = require('./api/router/user.router')
 const matchesAPI = require('./api/router/matches.router')
