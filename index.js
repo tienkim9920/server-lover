@@ -1,7 +1,11 @@
 require("dotenv").config();
-const express = require("express");
-
+const express = require('express');
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
 const PORT = process.env.PORT || 4000;
 
 const cors = require("cors");
@@ -34,6 +38,31 @@ app.use('/user', userAPI)
 app.use('/matches', matchesAPI)
 app.use('/chat', chatAPI)
 
-app.listen(PORT, () => {
-    console.log(`listening at http://localhost:${PORT}`);
+io.on('connection', (socket) => {
+    console.log('a user connected', socket.id);
+
+    // Server sẽ nhận room chat từ client gửi lên
+    // sau đó sẽ tiến hành tạo room chat
+    socket.on('room', data => {
+        socket.join(data)
+        console.log(data)
+    })
+
+    // Sau đó sẽ tiến hình quá trình nhận tin nhắn từ client gửi lên
+    // có kèm room chat và gửi ngược trở lại
+    // những đối tượng tham gia vào room chat không bao gồm người gửi
+    socket.on("send", (data) => {
+        socket.to(data.room).emit('receive', {
+            name: data.msg,
+            room: data.room
+        })
+    })
+
+    socket.on("typing", (data) => {
+        socket.to(data.room).emit('typing')
+    })
+});
+  
+server.listen(PORT, () => {
+    console.log('listening on *: ' + PORT);
 });
