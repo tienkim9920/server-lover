@@ -33,10 +33,15 @@ app.use(bodyParser.json());
 const userAPI = require('./api/router/user.router')
 const matchesAPI = require('./api/router/matches.router')
 const chatAPI = require('./api/router/chat.router')
+const messageAPI = require('./api/router/message.router');
+
+// Model
+const Message = require("./api/model/message.model");
 
 app.use('/user', userAPI)
 app.use('/matches', matchesAPI)
 app.use('/chat', chatAPI)
+app.use('/message', messageAPI)
 
 io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
@@ -51,15 +56,16 @@ io.on('connection', (socket) => {
     // Sau đó sẽ tiến hình quá trình nhận tin nhắn từ client gửi lên
     // có kèm room chat và gửi ngược trở lại
     // những đối tượng tham gia vào room chat không bao gồm người gửi
-    socket.on("send", (data) => {
-        socket.to(data.room).emit('receive', {
-            name: data.msg,
-            room: data.room
-        })
+    socket.on("send", async (data) => {
+        console.log(data)
+
+        const message = await Message.create(data)
+
+        socket.to(data.room).emit('receive', message)
     })
 
     socket.on("typing", (data) => {
-        socket.to(data.room).emit('typing')
+        socket.to(data.room).emit('typing', data)
     })
 });
   
