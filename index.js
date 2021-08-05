@@ -37,6 +37,7 @@ const messageAPI = require('./api/router/message.router');
 
 // Model
 const Message = require("./api/model/message.model");
+const Chat = require("./api/model/chat.model");
 
 app.use('/user', userAPI)
 app.use('/matches', matchesAPI)
@@ -58,6 +59,13 @@ io.on('connection', (socket) => {
     // những đối tượng tham gia vào room chat không bao gồm người gửi
     socket.on("send", async (data) => {
         console.log(data)
+
+        // Cập nhật lại tin nhắn trong bảng Chat
+        const chat = await Chat.findOne({ id_user: data.id_userTo, id_userTo: data.id_user })
+
+        chat.message = data.message
+        
+        chat.save()
 
         const message = await Message.create(data)
 

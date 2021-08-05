@@ -63,36 +63,41 @@ module.exports.getObject = async (req, res) => {
 module.exports.updateLike = async (req, res) => {
 
     // Get object that user match
-    const match = await Matches.findOne({ _id: req.body._id })
+    const match = await Matches.findOne({ _id: req.body._id }).populate('id_userTo')
 
     match.status = '1'
 
     match.save()
 
     // Check conditional to push room chat for lover
-    const checking = await Matches.findOne({ id_user: match.id_userTo, id_userTo: match.id_user })
+    const checking = await Matches.findOne({ id_user: match.id_userTo._id, id_userTo: match.id_user })
 
     if (checking.status === '1' || checking.status === '2'){
 
         checkingMatch(match)
 
-        res.json("Create Room Chat Success")
+        res.json({
+            msg: 'Matches',
+            match
+        })
     }else{
-        res.json("Success")
+        res.json({
+            msg: 'No Matches'
+        })
     }
 
 }
 
 module.exports.updateSupper = async (req, res) => {
 
-    const match = await Matches.findOne({ _id: req.body._id })
+    const match = await Matches.findOne({ _id: req.body._id }).populate('id_userTo')
 
     match.status = '2'
 
     match.save()
 
     // Check conditional to push room chat for lover
-    const checking = await Matches.findOne({ id_user: match.id_userTo, id_userTo: match.id_user })
+    const checking = await Matches.findOne({ id_user: match.id_userTo._id, id_userTo: match.id_user })
 
     if (checking.status === '1' || checking.status === '2'){
 
@@ -123,7 +128,8 @@ async function checkingMatch(array){
 
     const chat_user_me = {
         id_user: array.id_user,
-        id_userTo: array.id_userTo,
+        id_userTo: array.id_userTo._id,
+        message: '',
         room
     }
 
@@ -131,8 +137,9 @@ async function checkingMatch(array){
     await Chat.create(chat_user_me)
 
     const chat_user_to = {
-        id_user: array.id_userTo,
+        id_user: array.id_userTo._id,
         id_userTo: array.id_user,
+        message: '',
         room
     }
 
