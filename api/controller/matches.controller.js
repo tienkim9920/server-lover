@@ -129,7 +129,7 @@ async function checkingMatch(array){
     const chat_user_me = {
         id_user: array.id_user,
         id_userTo: array.id_userTo._id,
-        message: '',
+        active: false,
         room
     }
 
@@ -139,7 +139,7 @@ async function checkingMatch(array){
     const chat_user_to = {
         id_user: array.id_userTo._id,
         id_userTo: array.id_user,
-        message: '',
+        active: false,
         room
     }
 

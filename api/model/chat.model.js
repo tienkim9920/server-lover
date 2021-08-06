@@ -8,7 +8,7 @@ const ChatSchema = new Schema({
         ref: 'User'
     },
     room: String,
-    message: String
+    active: Boolean
 });
 
 const Chat = mongoose.model('Chat', ChatSchema, 'Chat');

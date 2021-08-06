@@ -44,14 +44,71 @@ app.use('/matches', matchesAPI)
 app.use('/chat', chatAPI)
 app.use('/message', messageAPI)
 
-io.on('connection', (socket) => {
+let client = []
+
+io.on('connection', async (socket) => {
     console.log('a user connected', socket.id);
 
     // Server sẽ nhận room chat từ client gửi lên
     // sau đó sẽ tiến hành tạo room chat
     socket.on('room', data => {
         socket.join(data)
-        console.log(data)
+    })
+
+    setInterval(() => {
+        
+        const newClient = client.filter(value => {
+            return parseInt(value.expiredTime) > parseInt(Date.now())
+        })
+
+        client = newClient
+
+    }, 90000)
+
+    socket.on('getOnline', () => {
+        socket.emit('getOnline', client)
+    })
+    
+    // Nhận socket login từ client gửi lên
+    // Đầu tiên nó sẽ kiểm tra nếu trong bộ nhớ đã có tồn tại userId thì chứng tỏ userId này đã hoạt động
+    // Và nó sẽ return k có thêm vào bộ nhớ nữa
+    socket.on('login', session => {
+
+        let flag = false
+
+        client.forEach(value => {
+            if (value._id.includes(session)){
+                flag = true
+            }
+        })
+
+        if (flag){
+            return
+        }
+
+        // Khi thêm vào nó sẽ tạo expiredTime vòng đời cho userId
+        const data = {
+            _id: session,
+            expiredTime: Date.now() + 270000
+        }
+
+        client.push(data)
+    })
+
+    socket.on('check-active', (userId) => {
+
+        // Kiểm tra xem đối phương đã vào phòng hay chưa
+        client.forEach(value => {
+            if (value._id.includes(userId)){
+                socket.emit('check-active')
+            }
+        })
+
+    })
+
+
+    socket.on('active', data => {
+        socket.in(data.room).emit('active', data)
     })
 
     // Sau đó sẽ tiến hình quá trình nhận tin nhắn từ client gửi lên
@@ -59,13 +116,6 @@ io.on('connection', (socket) => {
     // những đối tượng tham gia vào room chat không bao gồm người gửi
     socket.on("send", async (data) => {
         console.log(data)
-
-        // Cập nhật lại tin nhắn trong bảng Chat
-        const chat = await Chat.findOne({ id_user: data.id_userTo, id_userTo: data.id_user })
-
-        chat.message = data.message
-        
-        chat.save()
 
         const message = await Message.create(data)
 
