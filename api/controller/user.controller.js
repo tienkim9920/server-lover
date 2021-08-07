@@ -39,7 +39,7 @@ module.exports.facebook = async (req, res) => {
     if (user){
         res.json({
             msg: "Account exist",
-            userID: user._id
+            user
         })
     }else{
         res.json({
